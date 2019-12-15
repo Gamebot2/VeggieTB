@@ -1,26 +1,22 @@
 <!DOCTYPE HTML>
-<!--
-	Alpha by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
-		<title>Alpha by HTML5 UP</title>
+		<title>VeggieTB</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="shortcut icon" href="images/favicon.ico"/>
 	</head>
 	<body class="landing is-preload">
 		<div id="page-wrapper">
 
 			<!-- Header -->
 				<header id="header" class="alt">
-					<h1><a href="index.html">Alpha</a> by HTML5 UP</h1>
+					<h1><a href="index.html">VeggieTB</a> by Ansh Jain</h1>
 					<nav id="nav">
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li>
+							<!--li>
 								<a href="#" class="icon solid fa-angle-down">Layouts</a>
 								<ul>
 									<li><a href="generic.html">Generic</a></li>
@@ -37,19 +33,15 @@
 									</li>
 								</ul>
 							</li>
-							<li><a href="#" class="button">Sign Up</a></li>
+							<li><a href="#" class="button">Sign Up</a></li-->
 						</ul>
 					</nav>
 				</header>
 
 			<!-- Banner -->
 				<section id="banner">
-					<h2>Alpha</h2>
-					<p>Another fine responsive site template freebie by HTML5 UP.</p>
-					<ul class="actions special">
-						<li><a href="#" class="button primary">Sign Up</a></li>
-						<li><a href="#" class="button">Learn More</a></li>
-					</ul>
+					<h2>VeggieTB</h2>
+					<p>A data science view at vegetarian tacos and burritos in the US.</p>
 				</section>
 
 			<!-- Main -->
@@ -57,43 +49,61 @@
 
 					<section class="box special">
 						<header class="major">
-							<h2>Introducing the ultimate mobile app
-							<br />
-							for doing stuff with your phone</h2>
-							<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc ornare<br />
-							adipiscing nunc adipiscing. Condimentum turpis massa.</p>
+							<h2>Introduction</h2>
+							<p>VeggieTB, short for Vegetarian Tacos and Burritos, is a short project I did
+								at the TAMU Datathon in October 2019. I was given a dataset of tacos and burritos
+								in restaurant menus across the United States, and I used to extract some useful information
+								regarding the state of vegetarian Mexican meals throughout the country. This site is to 
+								present my findings: please enjoy the same way I would enjoy a burrito.
+							</p>
 						</header>
-						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
+						<iframe style = "width:100%;height:450px;" src = "fullchart.html"></iframe>
 					</section>
 
 					<section class="box special features">
 						<div class="features-row">
 							<section>
-								<span class="icon solid major fa-bolt accent2"></span>
-								<h3>Magna etiam</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<span class="icon solid major fa-chart-bar accent2"></span>
+								<h3>Chart Overview</h3>
+								<p>This is a bubble map of the number of vegetarian options available in the US by city. Unsurprisingly,
+									the big hubs such as LA, San Francisco, and New York have the largest number of accommodating options.
+									It's interesting that none of the largest bubbles are in Texas, however, since we are so proud of 
+									our "Tex Mex" food style.
+								</p>
 							</section>
 							<section>
-								<span class="icon solid major fa-chart-area accent3"></span>
-								<h3>Ipsum dolor</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<span class="icon solid major fa-key accent3"></span>
+								<h3>Legend</h3>
+								<p>The legend on the right is the output of the K means algorithm described below, which 
+									is how I distributed the data into effective clusters by bubble color. The largest spots
+									are indicated both by the color green and their size on the map, centered at the baricentre 
+									of the city.
+								</p>
 							</section>
 						</div>
 						<div class="features-row">
 							<section>
-								<span class="icon solid major fa-cloud accent4"></span>
-								<h3>Sed feugiat</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<span class="icon solid major fa-database accent4"></span>
+								<h3>Data Filtration</h3>
+								<p>Since the <a href = "https://www.kaggle.com/datafiniti/restaurants-burritos-and-tacos/download">original dataset</a> 
+									features all taco and burrito data for the country, I had to filter out entries that contained some
+									sort of meat. I did this by filtering out based on both the name of the item and the menu's description,
+									if either or both were present. The default assumption was that it was not vegetarian, since most are not.
+								</p>
 							</section>
 							<section>
-								<span class="icon solid major fa-lock accent5"></span>
-								<h3>Enim phasellus</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<span class="icon solid major fa-cloud-upload-alt accent5"></span>
+								<h3>K Means Algorithm</h3>
+								<p>I used the K Means clustering algorithm provided by <a href="https://www.kaggle.com/datafiniti/restaurants-burritos-and-tacos/download">scikit-learn</a>
+									to come up with good labels to partition the bubble graph by color. Since there was too much data to
+									manually choose categories, I used an unsupervised algorithm to obtain the optimal partitions, and 
+									emphasized the larger cities for maximum usefulness.
+								</p>
 							</section>
 						</div>
 					</section>
 
-					<div class="row">
+					<!--div class="row">
 						<div class="col-6 col-12-narrower">
 
 							<section class="box special">
@@ -118,41 +128,20 @@
 							</section>
 
 						</div>
-					</div>
-
-				</section>
-
-			<!-- CTA -->
-				<section id="cta">
-
-					<h2>Sign up for beta access</h2>
-					<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
-
-					<form>
-						<div class="row gtr-50 gtr-uniform">
-							<div class="col-8 col-12-mobilep">
-								<input type="email" name="email" id="email" placeholder="Email Address" />
-							</div>
-							<div class="col-4 col-12-mobilep">
-								<input type="submit" value="Sign Up" class="fit" />
-							</div>
-						</div>
-					</form>
+					</div-->
 
 				</section>
 
 			<!-- Footer -->
 				<footer id="footer">
 					<ul class="icons">
-						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-						<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-						<li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
+						<li><a href="http://www.linkedin.com/in/anshjain-145" class="icon brands fa-linkedin"><span class="label">Facebook</span></a></li>
+						<li><a href="http://www.github.com/Gamebot3" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.facebook.com/profile.php?id=100011548208256&ref=bookmarks" class="icon brands fa-facebook"><span class="label">Dribbble</span></a></li>
+						<li><a href="https://gamebot2.com" class="icon brands fa-aws"><span class="label">Google+</span></a></li>
 					</ul>
 					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; Ansh Jain. All rights reserved.</li>
 					</ul>
 				</footer>
 

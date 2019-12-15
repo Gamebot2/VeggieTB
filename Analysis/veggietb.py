@@ -27,7 +27,7 @@ data.drop(['id', 'keys', 'menus.dateSeen', 'priceRangeCurrency', 'priceRangeMin'
  'address', 'country', 'menus.currency', 'postalCode'], axis=1, inplace=True)
 data = data[pd.notnull(data['latitude'])]
 
-data = data[~data['menus.name'].str.contains('Shrimp') & ~data['menus.name'].str.contains('Beef')
+dataVeg = data[~data['menus.name'].str.contains('Shrimp') & ~data['menus.name'].str.contains('Beef')
  & ~data['menus.name'].str.contains('Breakfast') & ~data['menus.name'].str.contains('Chicken')
  & ~data['menus.name'].str.contains('Sausage') & ~data['menus.name'].str.contains('Pork')
  & ~data['menus.name'].str.contains('Fish') & ~data['menus.name'].str.contains('Steak')
@@ -38,21 +38,27 @@ data = data[~data['menus.name'].str.contains('Shrimp') & ~data['menus.name'].str
 
 #print(data['longitude'].head())
 
-texas_cities = data[(data['city'] == 'Dallas') | (data['city'] == 'Austin') | (data['city'] == 'Houston')]
 
 #nullPositions = data.isnull()
 #print("Null values: ")
 #print(data.isnull().sum())
 
 #Get mealCounts, which has the number of vegetarian options by city
-mealCounts = data.groupby(['city', 'longitude', 'latitude']).count()
+mealCounts = dataVeg.groupby(['city', 'longitude', 'latitude']).count()
 mealCounts.reset_index(level=[0,1,2], inplace=True)
 mealCounts = mealCounts[['city', 'menus.name', 'latitude', 'longitude']]
 aggregation_functions = {'longitude' : 'first', 'latitude' : 'first', 'menus.name' : 'sum'}
 mealCounts = mealCounts.groupby('city', as_index = False).aggregate(aggregation_functions)
 mealCounts.sort_values(by=['menus.name'], ascending = False, inplace=True)
 mealCounts = mealCounts[mealCounts['menus.name'] > 5]
-print(mealCounts.head())
+
+meatCounts = data.groupby(['city', 'longitude', 'latitude']).count()
+meatCounts.reset_index(level=[0,1,2], inplace=True)
+meatCounts = meatCounts[['city', 'menus.name', 'latitude', 'longitude']]
+aggregation_functions = {'longitude' : 'first', 'latitude' : 'first', 'menus.name' : 'sum'}
+meatCounts = meatCounts.groupby('city', as_index = False).aggregate(aggregation_functions)
+meatCounts.sort_values(by=['menus.name'], ascending = False, inplace=True)
+meatCounts = meatCounts[meatCounts['menus.name'] > 5]
 
 
 #Run K means clustering to get good category values for the bubble map
@@ -105,14 +111,16 @@ for i in range(len(categories)):
         )
     )
 
-fig.show()
+#fig.show()
+
+print(mealCounts[['city', 'menus.name']].head(10))
+print("")
+print(meatCounts[['city', 'menus.name']].head(10))
 
 '''
 Ideas for improvements
     -Put the data in a tabular format (maybe top 10 cities)
     -Get the meat data equivalent to find discrepancies
-    -Create a static website to display the data
     -Use the description entries to get rid of more meat options
-
 
 '''
